@@ -143,29 +143,26 @@ class Timber private constructor() {
     /** Return whether a message at `priority` or `tag` should be logged. */
     protected open fun isLoggable(tag: String?, priority: Int) = isLoggable(priority)
 
-    private fun prepareLog(priority: Int, t: Throwable?, message: String?, vararg args: Any?) {
+    protected open fun prepareLog(priority: Int, t: Throwable?, messageIn: String?, vararg args: Any?) {
       // Consume tag even when message is not loggable so that next message is correctly tagged.
       val tag = tag
       if (!isLoggable(tag, priority)) {
         return
       }
 
-      var message = message
+      var message = messageIn
       if (message.isNullOrEmpty()) {
         if (t == null) {
           return  // Swallow message if it's null and there's no throwable.
         }
         message = getStackTraceString(t)
       } else {
-        if (args.isNotEmpty()) {
-          message = formatMessage(message, args)
-        }
         if (t != null) {
           message += "\n" + getStackTraceString(t)
         }
       }
 
-      log(priority, tag, message, t)
+      log(priority, tag, message, t, args)
     }
 
     /** Formats a log message with optional arguments. */
@@ -196,7 +193,7 @@ class Timber private constructor() {
   open class DebugTree : Tree() {
     private val fqcnIgnore = listOf(
         Timber::class.java.name,
-        Timber.Forest::class.java.name,
+        Forest::class.java.name,
         Tree::class.java.name,
         DebugTree::class.java.name
     )
