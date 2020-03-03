@@ -22,7 +22,9 @@ public class ExampleApp extends Application {
 
   /** A tree which logs important information for crash reporting. */
   private static class CrashReportingTree extends Timber.Tree {
-    @Override protected void log(int priority, String tag, @NonNull String message, Throwable t) {
+
+    @Override
+    protected void logMessage(int priority, @NonNull String tag, @NonNull String message, @NonNull Throwable t, @NonNull Object... args) {
       if (priority == Log.VERBOSE || priority == Log.DEBUG) {
         return;
       }
