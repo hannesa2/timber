@@ -1,1 +1,2 @@
 -dontwarn org.jetbrains.annotations.**
+-keep class timber.log.Timber { *; }
