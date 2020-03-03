@@ -289,7 +289,7 @@ class TimberTest {
     Timber.plant(object : Timber.DebugTree() {
       private val MAX_TAG_LENGTH = 23
 
-      override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+      override fun logMessage(priority: Int, tag: String?, message: String, t: Throwable?, vararg args: Any?) {
         try {
           assertTrue(Log.isLoggable(tag, priority))
           if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
@@ -299,7 +299,7 @@ class TimberTest {
           fail(e.message)
         }
 
-        super.log(priority, tag, message, t)
+        super.logMessage(priority, tag, message, t)
       }
     })
     ClassNameThatIsReallyReallyReallyLong()
@@ -415,7 +415,7 @@ class TimberTest {
   @Test fun logMessageCallback() {
     val logs = ArrayList<String>()
     Timber.plant(object : Timber.DebugTree() {
-      override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+      override fun logMessage(priority: Int, tag: String?, message: String, t: Throwable?, vararg args: Any?) {
         logs.add("$priority $tag $message")
       }
     })
@@ -596,7 +596,7 @@ class TimberTest {
 
   private fun getLogs() = ShadowLog.getLogs().filter { it.tag != ROBOLECTRIC_INSTRUMENTATION_TAG }
 
-  private class LogAssert internal constructor(private val items: List<LogItem>) {
+  private class LogAssert(private val items: List<LogItem>) {
     private var index = 0
 
     fun hasVerboseMessage(tag: String, message: String): LogAssert {
