@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class TimberIssueRegistry extends IssueRegistry {
   @Override public List<Issue> getIssues() {
-    return Arrays.asList(WrongTimberUsageDetector.getIssues());
+    return Arrays.asList(Moka2UsageDetector.getIssues());
   }
 
   @Override public int getApi() {
