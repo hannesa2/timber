@@ -3,7 +3,7 @@ package com.example.timber.ui;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 import timber.log.Timber;
 
