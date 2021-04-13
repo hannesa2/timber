@@ -2,10 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-  compileSdkVersion versions.compileSdk
+  compileSdkVersion 28
 
   defaultConfig {
-    minSdkVersion versions.minSdk
+    minSdkVersion 14
     consumerProguardFiles 'consumer-proguard-rules.pro'
   }
 
@@ -20,13 +20,13 @@ android {
 }
 
 dependencies {
-  api deps.kotlin.stdlib
-  implementation deps.annotations
+  api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation 'org.jetbrains:annotations:20.1.0'
 
-  testImplementation deps.annotations
-  testImplementation deps.junit
-  testImplementation deps.truth
-  testImplementation deps.robolectric
+  testImplementation 'org.jetbrains:annotations:20.1.0'
+  testImplementation 'junit:junit:4.13.2'
+  testImplementation 'com.google.truth:truth:0.41'
+  testImplementation 'org.robolectric:robolectric:3.8'
 
   lintPublish project(':timber-lint')
 }

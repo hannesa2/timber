@@ -5,10 +5,10 @@ targetCompatibility = JavaVersion.VERSION_1_8
 sourceCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
-  compileOnly deps.lint.api
-  compileOnly deps.lint.checks
-  testImplementation deps.lint.core
-  testImplementation deps.lint.tests
+  compileOnly "com.android.tools.lint:lint-api:$androidTools"
+  compileOnly "com.android.tools.lint:lint-checks:$androidTools"
+  testImplementation "com.android.tools.lint:lint:$androidTools"
+  testImplementation "com.android.tools.lint:lint-tests:$androidTools"
 }
 
 jar {
