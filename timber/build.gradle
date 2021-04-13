@@ -25,7 +25,7 @@ dependencies {
 
   testImplementation 'org.jetbrains:annotations:20.1.0'
   testImplementation 'junit:junit:4.13.2'
-  testImplementation 'com.google.truth:truth:0.41'
+  testImplementation 'com.google.truth:truth:1.1.2'
   testImplementation 'org.robolectric:robolectric:3.8'
 
   lintPublish project(':timber-lint')
