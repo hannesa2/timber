@@ -32,5 +32,3 @@ dependencies {
 
   lintPublish project(':timber-lint')
 }
-
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
