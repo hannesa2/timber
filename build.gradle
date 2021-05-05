@@ -19,7 +19,7 @@ buildscript {
 }
 
 ext {
-  androidTools = '27.0.1'
+  androidTools = '27.2.0'
 }
 
 subprojects {
