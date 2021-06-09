@@ -138,11 +138,12 @@ class WrongTimberUsageDetectorTest {
                 |package foo;
                 |public class Example {
                 |  public void log() {
+                |    com.moka.EspressoMoka.onView(ViewMatchers.withId(R.id.edit)).perform(ViewActions.typeText(STRING_TO_BE_TYPED), ViewActions.closeSoftKeyboard());
                 |    android.util.Log.d("TAG", "msg");
                 |  }
                 |}""".trimMargin())
         )
-        .issues(WrongTimberUsageDetector.ISSUE_LOG)
+        .issues(Moka2UsageDetector.ISSUE_ESPRESSO_ONVIEW)
         .run()
         .expect("""
             |src/foo/Example.java:4: Warning: Using 'Log' instead of 'Timber' [LogNotTimber]
