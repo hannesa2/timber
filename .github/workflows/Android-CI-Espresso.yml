@@ -14,7 +14,7 @@ jobs:
     runs-on: macOS-latest
     strategy:
       matrix:
-        java_version: [1.8]
+        java_version: [ 1.8 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,13 +23,13 @@ jobs:
         with:
           java-version: ${{ matrix.java_version }}
       - name: Install Android SDK
-        uses: malinskiy/action-android/install-sdk@release/0.1.1
+        uses: malinskiy/action-android/install-sdk@release/0.1.2
       - name: Build project
         run: ./gradlew assembleDebug
       - name: Run tests
         run: ./gradlew test
       - name: Run instrumentation tests
-        uses: malinskiy/action-android/emulator-run-cmd@release/0.1.1
+        uses: malinskiy/action-android/emulator-run-cmd@release/0.1.2
         with:
           cmd: ./gradlew cAT
           api: 28
