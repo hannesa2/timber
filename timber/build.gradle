@@ -1,6 +1,6 @@
 apply plugin: 'org.jetbrains.kotlin.multiplatform'
 apply plugin: 'com.android.kotlin.multiplatform.library'
-apply plugin: 'com.vanniktech.maven.publish'
+apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka' // Must be applied here for publish plugin.
 
 kotlin {
@@ -53,3 +53,14 @@ tasks.named('check') { check ->
 dependencies {
   lintPublish project(':timber-lint')
 }
+
+project.afterEvaluate {
+  publishing {
+    publications {
+      release(MavenPublication) {
+        from components.release
+      }
+    }
+  }
+}
+
