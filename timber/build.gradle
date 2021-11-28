@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'com.vanniktech.maven.publish'
+apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka' // Must be applied here for publish plugin.
 
 android {
@@ -28,3 +28,14 @@ dependencies {
 
   lintPublish project(':timber-lint')
 }
+
+project.afterEvaluate {
+  publishing {
+    publications {
+      release(MavenPublication) {
+        from components.release
+      }
+    }
+  }
+}
+
