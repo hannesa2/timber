@@ -4,7 +4,7 @@ configurations {
 }
 
 dependencies {
-  baseline('com.jakewharton.timber:timber:4.7.1') {
+  baseline('com.jakewharton.timber:timber:5.0.1') {
     transitive = false
     force = true
   }
