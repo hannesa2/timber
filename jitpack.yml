@@ -1,0 +1,4 @@
+jdk:
+  - openjdk11
+install:
+  - ./gradlew :timber:build :timber:publishToMavenLocal -x :timber:test
