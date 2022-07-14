@@ -16,12 +16,12 @@ android {
     versionCode 1
     versionName '1.0.0'
   }
+    lint {
+        ignore 'InvalidPackage'
+        textOutput file('stdout')
+        textReport true
+    }
 
-  lintOptions {
-    textReport true
-    textOutput 'stdout'
-    ignore 'InvalidPackage'
-  }
 }
 
 dependencies {
