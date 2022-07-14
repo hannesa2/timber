@@ -10,11 +10,11 @@ android {
     minSdkVersion versions.minSdk
     consumerProguardFiles 'consumer-proguard-rules.pro'
   }
+    lint {
+        textOutput file('stdout')
+        textReport true
+    }
 
-  lintOptions {
-    textReport true
-    textOutput 'stdout'
-  }
 }
 
 dependencies {
