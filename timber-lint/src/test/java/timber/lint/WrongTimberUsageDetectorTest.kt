@@ -21,7 +21,7 @@ class WrongTimberUsageDetectorTest {
       |    open fun d(message: String?, vararg args: Any?) {}
       |    open fun d(t: Throwable?, message: String?, vararg args: Any?) {}
       |  }
-      |}""".trimMargin())
+      |}""".trimMargin().toString())
 
   @Test fun usingAndroidLogWithTwoArguments() {
     lint()
@@ -33,7 +33,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |    Log.d("TAG", "msg");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
           kotlin("""
                 |package foo
                 |import android.util.Log
@@ -41,7 +41,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |    Log.d("TAG", "msg")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -53,7 +53,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Warning: Using 'Log' instead of 'Timber' [LogNotTimber]
             |    Log.d("TAG", "msg")
             |    ~~~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 5: Replace with Timber.tag("TAG").d("msg"):
             |@@ -5 +5
@@ -71,7 +71,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -5 +5
             |-     Log.d("TAG", "msg")
             |+     Timber.d("msg")
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun usingAndroidLogWithThreeArguments() {
@@ -84,7 +84,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |    Log.d("TAG", "msg", new Exception());
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import android.util.Log
@@ -92,7 +92,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |    Log.d("TAG", "msg", Exception())
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -104,7 +104,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Warning: Using 'Log' instead of 'Timber' [LogNotTimber]
             |    Log.d("TAG", "msg", Exception())
             |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 5: Replace with Timber.tag("TAG").d(new Exception(), "msg"):
             |@@ -5 +5
@@ -122,7 +122,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -5 +5
             |-     Log.d("TAG", "msg", Exception())
             |+     Timber.d(Exception(), "msg")
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun usingFullyQualifiedAndroidLogWithTwoArguments() {
@@ -134,14 +134,14 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |    android.util.Log.d("TAG", "msg");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |class Example {
                 |  fun log() {
                 |    android.util.Log.d("TAG", "msg")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -153,7 +153,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:4: Warning: Using 'Log' instead of 'Timber' [LogNotTimber]
             |    android.util.Log.d("TAG", "msg")
             |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 4: Replace with Timber.tag("TAG").d("msg"):
             |@@ -4 +4
@@ -171,7 +171,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -4 +4
             |-     android.util.Log.d("TAG", "msg")
             |+     Timber.d("msg")
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun usingFullyQualifiedAndroidLogWithThreeArguments() {
@@ -183,14 +183,14 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |    android.util.Log.d("TAG", "msg", new Exception());
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
           kotlin("""
                 |package foo
                 |class Example {
                 |  fun log() {
                 |    android.util.Log.d("TAG", "msg", Exception())
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -202,7 +202,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:4: Warning: Using 'Log' instead of 'Timber' [LogNotTimber]
             |    android.util.Log.d("TAG", "msg", Exception())
             |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 4: Replace with Timber.tag("TAG").d(new Exception(), "msg"):
             |@@ -4 +4
@@ -220,7 +220,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -4 +4
             |-     android.util.Log.d("TAG", "msg", Exception())
             |+     Timber.d(Exception(), "msg")
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun innerStringFormat() {
@@ -233,7 +233,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.d(String.format("%s", "arg1"));
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -241,7 +241,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.d(String.format("%s", "arg1"))
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -254,7 +254,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Warning: Using 'String#format' inside of 'Timber' [StringFormatInTimber]
             |     Timber.d(String.format("%s", "arg1"))
             |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 5: Remove String.format(...):
             |@@ -5 +5
@@ -264,7 +264,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -5 +5
             |-      Timber.d(String.format("%s", "arg1"))
             |+      Timber.d("%s", "arg1")
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun innerStringFormatWithStaticImport() {
@@ -278,7 +278,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.d(format("%s", "arg1"));
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -287,7 +287,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.d(format("%s", "arg1"))
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -300,7 +300,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:6: Warning: Using 'String#format' inside of 'Timber' [StringFormatInTimber]
             |     Timber.d(format("%s", "arg1"))
             |              ~~~~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 6: Remove String.format(...):
             |@@ -6 +6
@@ -310,7 +310,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -6 +6
             |-      Timber.d(format("%s", "arg1"))
             |+      Timber.d("%s", "arg1")
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun innerStringFormatInNestedMethods() {
@@ -324,7 +324,7 @@ class WrongTimberUsageDetectorTest {
                 |     Timber.d(id(String.format("%s", "arg1")));
                 |  }
                 |  private String id(String s) { return s; }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -333,7 +333,7 @@ class WrongTimberUsageDetectorTest {
                 |     Timber.d(id(String.format("%s", "arg1")))
                 |  }
                 |  private fun id(s: String): String { return s }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -345,7 +345,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Warning: Using 'String#format' inside of 'Timber' [StringFormatInTimber]
             |     Timber.d(id(String.format("%s", "arg1")))
             |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
   }
 
   @Test fun innerStringFormatInNestedAssignment() {
@@ -359,7 +359,7 @@ class WrongTimberUsageDetectorTest {
                 |    String msg = null;
                 |    Timber.d(msg = String.format("msg"));
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
           // no kotlin equivalent, since nested assignments do not exist
         )
         .allowClassNameClashes(true)
@@ -369,7 +369,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.java:6: Warning: Using 'String#format' inside of 'Timber' [StringFormatInTimber]
             |    Timber.d(msg = String.format("msg"));
             |                   ~~~~~~~~~~~~~~~~~~~~
-            |0 errors, 1 warnings""".trimMargin())
+            |0 errors, 1 warnings""".trimMargin().toString())
   }
 
   @Test fun validStringFormatInCodeBlock() {
@@ -383,7 +383,7 @@ class WrongTimberUsageDetectorTest {
                 |      String name = String.format("msg");
                 |    }
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |class Example {
@@ -392,7 +392,7 @@ class WrongTimberUsageDetectorTest {
                 |      val name = String.format("msg")
                 |    }
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -409,14 +409,14 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |    new Exception(String.format("msg"));
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
           kotlin("""
                 |package foo
                 |class Example {
                 |  fun log() {
                 |    Exception(String.format("msg"))
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -431,14 +431,14 @@ class WrongTimberUsageDetectorTest {
                 |package foo;
                 |public class Example {
                 |  static String[] X = { String.format("%s", 100) };
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
            kotlin("""
                 |package foo
                 |class Example {
                 |  companion object {
                 |    val X = arrayOf(String.format("%s", 100))
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -457,7 +457,7 @@ class WrongTimberUsageDetectorTest {
               |    String message = String.format("%s", "foo");
               |    Timber.d(message);
               |  }
-              |}""".trimMargin()),
+              |}""".trimMargin().toString()),
           kotlin("""
               |package foo
               |import timber.log.Timber
@@ -466,7 +466,7 @@ class WrongTimberUsageDetectorTest {
               |    val message = String.format("%s", "foo")
               |    Timber.d(message)
               |  }
-              |}""".trimMargin()),
+              |}""".trimMargin().toString()),
       )
       .allowClassNameClashes(true)
       .issues(*issues)
@@ -485,7 +485,7 @@ class WrongTimberUsageDetectorTest {
                 |     Exception e = new Exception();
                 |     Timber.d("%s", e);
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -494,7 +494,7 @@ class WrongTimberUsageDetectorTest {
                 |     val e = Exception()
                 |     Timber.d("%s", e)
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -507,7 +507,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:6: Warning: Throwable should be first argument [ThrowableNotAtBeginning]
             |     Timber.d("%s", e)
             |     ~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 6: Replace with e, "%s":
             |@@ -6 +6
@@ -517,7 +517,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -6 +6
             |-      Timber.d("%s", e)
             |+      Timber.d(e, "%s")
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun stringConcatenationBothLiterals() {
@@ -530,7 +530,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.d("foo" + "bar");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -538,7 +538,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.d("foo" + "bar")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -557,7 +557,7 @@ class WrongTimberUsageDetectorTest {
                 |     String foo = "foo";
                 |     Timber.d(foo + "bar");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
           kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -566,7 +566,7 @@ class WrongTimberUsageDetectorTest {
                 |     val foo = "foo"
                 |     Timber.d("${"$"}{foo}bar")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -576,13 +576,13 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.java:6: Warning: Replace String concatenation with Timber's string formatting [BinaryOperationInTimber]
             |     Timber.d(foo + "bar");
             |              ~~~~~~~~~~~
-            |0 errors, 1 warnings""".trimMargin())
+            |0 errors, 1 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 5: Replace with "%sbar", foo:
             |@@ -6 +6
             |-      Timber.d(foo + "bar");
             |+      Timber.d("%sbar", foo);
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun stringConcatenationRightLiteral() {
@@ -596,7 +596,7 @@ class WrongTimberUsageDetectorTest {
                 |     String bar = "bar";
                 |     Timber.d("foo" + bar);
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -605,7 +605,7 @@ class WrongTimberUsageDetectorTest {
                 |     val bar = "bar"
                 |     Timber.d("foo${"$"}bar")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -615,13 +615,13 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.java:6: Warning: Replace String concatenation with Timber's string formatting [BinaryOperationInTimber]
             |     Timber.d("foo" + bar);
             |              ~~~~~~~~~~~
-            |0 errors, 1 warnings""".trimMargin())
+            |0 errors, 1 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 5: Replace with "foo%s", bar:
             |@@ -6 +6
             |-      Timber.d("foo" + bar);
             |+      Timber.d("foo%s", bar);
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun stringConcatenationBothVariables() {
@@ -636,7 +636,7 @@ class WrongTimberUsageDetectorTest {
                 |     String bar = "bar";
                 |     Timber.d(foo + bar);
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
           kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -646,7 +646,7 @@ class WrongTimberUsageDetectorTest {
                 |     val bar = "bar"
                 |     Timber.d("${"$"}foo${"$"}bar")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -656,13 +656,13 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.java:7: Warning: Replace String concatenation with Timber's string formatting [BinaryOperationInTimber]
             |     Timber.d(foo + bar);
             |              ~~~~~~~~~
-            |0 errors, 1 warnings""".trimMargin())
+            |0 errors, 1 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 6: Replace with "%s%s", foo, bar:
             |@@ -7 +7
             |-      Timber.d(foo + bar);
             |+      Timber.d("%s%s", foo, bar);
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun stringConcatenationInsideTernary() {
@@ -676,7 +676,7 @@ class WrongTimberUsageDetectorTest {
                 |     String s = "world!";
                 |     Timber.d(true ? "Hello, " + s : "Bye");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
           kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -685,7 +685,7 @@ class WrongTimberUsageDetectorTest {
                 |     val s = "world!"
                 |     Timber.d(if(true) "Hello, ${"$"}s" else "Bye")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -695,7 +695,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.java:6: Warning: Replace String concatenation with Timber's string formatting [BinaryOperationInTimber]
             |     Timber.d(true ? "Hello, " + s : "Bye");
             |                     ~~~~~~~~~~~~~
-            |0 errors, 1 warnings""".trimMargin())
+            |0 errors, 1 warnings""".trimMargin().toString())
   }
 
   @Test fun tooManyFormatArgs() {
@@ -708,7 +708,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.d("%s %s", "arg1");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -716,7 +716,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.d("%s %s", "arg1")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -728,7 +728,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Error: Wrong argument count, format string %s %s requires 2 but format call supplies 1 [TimberArgCount]
             |     Timber.d("%s %s", "arg1")
             |     ~~~~~~~~~~~~~~~~~~~~~~~~~
-            |2 errors, 0 warnings""".trimMargin())
+            |2 errors, 0 warnings""".trimMargin().toString())
   }
 
   @Test fun tooManyArgs() {
@@ -741,7 +741,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.d("%s", "arg1", "arg2");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -749,7 +749,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.d("%s", "arg1", "arg2")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -761,7 +761,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Error: Wrong argument count, format string %s requires 1 but format call supplies 2 [TimberArgCount]
             |     Timber.d("%s", "arg1", "arg2")
             |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            |2 errors, 0 warnings""".trimMargin())
+            |2 errors, 0 warnings""".trimMargin().toString())
   }
 
   @Test fun wrongArgTypes() {
@@ -774,7 +774,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.d("%d", "arg1");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -782,7 +782,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.d("%d", "arg1")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -794,7 +794,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Error: Wrong argument type for formatting argument '#1' in %d: conversion is 'd', received String (argument #2 in method call) [TimberArgTypes]
             |     Timber.d("%d", "arg1")
             |                    ~~~~~~
-            |2 errors, 0 warnings""".trimMargin())
+            |2 errors, 0 warnings""".trimMargin().toString())
   }
 
   @Test fun tagTooLongLiteralOnly() {
@@ -807,7 +807,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.tag("abcdefghijklmnopqrstuvwx");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -815,7 +815,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.tag("abcdefghijklmnopqrstuvwx")
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
                 manifest().minSdk(25)
         )
         .allowClassNameClashes(true)
@@ -825,7 +825,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.java:5: Error: The logging tag can be at most 23 characters, was 24 (abcdefghijklmnopqrstuvwx) [TimberTagLength]
             |     Timber.tag("abcdefghijklmnopqrstuvwx");
             |                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-            |1 errors, 0 warnings""".trimMargin())
+            |1 errors, 0 warnings""".trimMargin().toString())
   }
 
   @Test fun tagTooLongLiteralOnlyBeforeApi26() {
@@ -838,7 +838,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.tag("abcdefghijklmnopqrstuvwx");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -846,7 +846,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.tag("abcdefghijklmnopqrstuvwx")
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             manifest().minSdk(26)
         )
         .allowClassNameClashes(true)
@@ -865,7 +865,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.tag("tag").d("%s %s", "arg1");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -873,7 +873,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.tag("tag").d("%s %s", "arg1")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -885,7 +885,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Error: Wrong argument count, format string %s %s requires 2 but format call supplies 1 [TimberArgCount]
             |     Timber.tag("tag").d("%s %s", "arg1")
             |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            |2 errors, 0 warnings""".trimMargin())
+            |2 errors, 0 warnings""".trimMargin().toString())
   }
 
   @Test fun tooManyArgsInTag() {
@@ -898,7 +898,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.tag("tag").d("%s", "arg1", "arg2");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -906,7 +906,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.tag("tag").d("%s", "arg1", "arg2")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -918,7 +918,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Error: Wrong argument count, format string %s requires 1 but format call supplies 2 [TimberArgCount]
             |     Timber.tag("tag").d("%s", "arg1", "arg2")
             |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            |2 errors, 0 warnings""".trimMargin())
+            |2 errors, 0 warnings""".trimMargin().toString())
   }
 
   @Test fun wrongArgTypesInTag() {
@@ -931,7 +931,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.tag("tag").d("%d", "arg1");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -939,7 +939,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |     Timber.tag("tag").d("%d", "arg1")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -951,7 +951,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:5: Error: Wrong argument type for formatting argument '#1' in %d: conversion is 'd', received String (argument #2 in method call) [TimberArgTypes]
             |     Timber.tag("tag").d("%d", "arg1")
             |                               ~~~~~~
-            |2 errors, 0 warnings""".trimMargin())
+            |2 errors, 0 warnings""".trimMargin().toString())
   }
 
   @Test fun exceptionLoggingUsingExceptionMessage() {
@@ -965,7 +965,7 @@ class WrongTimberUsageDetectorTest {
                 |     Exception e = new Exception();
                 |     Timber.d(e.getMessage());
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -974,7 +974,7 @@ class WrongTimberUsageDetectorTest {
                 |     val e = Exception()
                 |     Timber.d(e.message)
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -986,7 +986,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:6: Warning: Explicitly logging exception message is redundant [TimberExceptionLogging]
             |     Timber.d(e.message)
             |     ~~~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 6: Replace message with throwable:
             |@@ -6 +6
@@ -996,7 +996,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -6 +6
             |-      Timber.d(e.message)
             |+      Timber.d(e)
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun exceptionLoggingUsingExceptionMessageArgument() {
@@ -1010,7 +1010,7 @@ class WrongTimberUsageDetectorTest {
                 |     Exception e = new Exception();
                 |     Timber.d(e, e.getMessage());
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1019,7 +1019,7 @@ class WrongTimberUsageDetectorTest {
                 |     val e = Exception()
                 |     Timber.d(e, e.message)
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1032,7 +1032,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:6: Warning: Explicitly logging exception message is redundant [TimberExceptionLogging]
             |     Timber.d(e, e.message)
             |     ~~~~~~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 5: Remove redundant argument:
             |@@ -6 +6
@@ -1042,7 +1042,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -6 +6
             |-      Timber.d(e, e.message)
             |+      Timber.d(e)
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun exceptionLoggingUsingVariable() {
@@ -1057,7 +1057,7 @@ class WrongTimberUsageDetectorTest {
                 |     Exception e = new Exception();
                 |     Timber.d(e, msg);
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1067,7 +1067,7 @@ class WrongTimberUsageDetectorTest {
                 |     val e = Exception()
                 |     Timber.d(e, msg)  
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1086,7 +1086,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log(Exception e, String message) {
                 |     Timber.d(e, message);
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1094,7 +1094,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log(e: Exception, message: String) {
                 |     Timber.d(e, message)
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1116,7 +1116,7 @@ class WrongTimberUsageDetectorTest {
                 |  private String method() {
                 |    return "foo";
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1127,7 +1127,7 @@ class WrongTimberUsageDetectorTest {
                 |  private fun method(): String {
                 |     return "foo"
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1148,7 +1148,7 @@ class WrongTimberUsageDetectorTest {
                 |     Exception e = new Exception();
                 |     Timber.d(e, message);
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1158,7 +1158,7 @@ class WrongTimberUsageDetectorTest {
                 |     val e = Exception()
                 |     Timber.d(e, message)
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1179,7 +1179,7 @@ class WrongTimberUsageDetectorTest {
                 |     Exception e = new Exception();
                 |     Timber.d(e, message);
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1189,7 +1189,7 @@ class WrongTimberUsageDetectorTest {
                 |     val e = Exception()
                 |     Timber.d(e, message)
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1209,7 +1209,7 @@ class WrongTimberUsageDetectorTest {
                 |     Exception e = new Exception();
                 |     Timber.d(e, "");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1218,7 +1218,7 @@ class WrongTimberUsageDetectorTest {
                 |     val e = Exception()
                 |     Timber.d(e, "")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1231,7 +1231,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:6: Warning: Use single-argument log method instead of null/empty message [TimberExceptionLogging]
             |     Timber.d(e, "")
             |     ~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 6: Remove redundant argument:
             |@@ -6 +6
@@ -1241,7 +1241,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -6 +6
             |-      Timber.d(e, "")
             |+      Timber.d(e)
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun exceptionLoggingUsingNullMessage() {
@@ -1255,7 +1255,7 @@ class WrongTimberUsageDetectorTest {
                 |     Exception e = new Exception();
                 |     Timber.d(e, null);
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1264,7 +1264,7 @@ class WrongTimberUsageDetectorTest {
                 |     val e = Exception()
                 |     Timber.d(e, null)
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1277,7 +1277,7 @@ class WrongTimberUsageDetectorTest {
             |src/foo/Example.kt:6: Warning: Use single-argument log method instead of null/empty message [TimberExceptionLogging]
             |     Timber.d(e, null)
             |     ~~~~~~~~~~~~~~~~~
-            |0 errors, 2 warnings""".trimMargin())
+            |0 errors, 2 warnings""".trimMargin().toString())
         .expectFixDiffs("""
             |Fix for src/foo/Example.java line 6: Remove redundant argument:
             |@@ -6 +6
@@ -1287,7 +1287,7 @@ class WrongTimberUsageDetectorTest {
             |@@ -6 +6
             |-      Timber.d(e, null)
             |+      Timber.d(e)
-            |""".trimMargin())
+            |""".trimMargin().toString())
   }
 
   @Test fun exceptionLoggingUsingValidMessage() {
@@ -1301,7 +1301,7 @@ class WrongTimberUsageDetectorTest {
                 |     Exception e = new Exception();
                 |     Timber.d(e, "Valid message");
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1310,7 +1310,7 @@ class WrongTimberUsageDetectorTest {
                 |     val e = Exception()
                 |     Timber.d(e, "Valid message")
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1329,7 +1329,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |    Timber.d("%tc", new java.util.Date());
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1337,7 +1337,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |    Timber.d("%tc", java.util.Date())
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1355,7 +1355,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |    Timber.d("%tc", System.currentTimeMillis());
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1363,7 +1363,7 @@ class WrongTimberUsageDetectorTest {
                 |  fun log() {
                 |    Timber.d("%tc", System.currentTimeMillis())
                 |  }
-                |}""".trimMargin())
+                |}""".trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
@@ -1381,7 +1381,7 @@ class WrongTimberUsageDetectorTest {
                 |  public void log() {
                 |     Timber.d("%b", Boolean.valueOf(true));
                 |  }
-                |}""".trimMargin()),
+                |}""".trimMargin().toString()),
             // no kotlin equivalent, since primitive wrappers do not exist
         )
         .allowClassNameClashes(true)
@@ -1405,7 +1405,7 @@ class WrongTimberUsageDetectorTest {
                 |    Timber.d(bar.baz);
                 |  }
                 |}
-                """.trimMargin()),
+                """.trimMargin().toString()),
             kotlin("""
                 |package foo
                 |import timber.log.Timber
@@ -1418,7 +1418,7 @@ class WrongTimberUsageDetectorTest {
                 |    Timber.d(bar.baz)
                 |  }
                 |}
-                """.trimMargin())
+                """.trimMargin().toString())
         )
         .allowClassNameClashes(true)
         .issues(*issues)
