@@ -13,6 +13,7 @@ kotlin {
       // "it" --> https://issuetracker.google.com/issues/445115242
       it.consumerKeepRules.file('consumer-keep-rules.pro')
     }
+    namespace 'timber.log'
 
     lint {
       it.textReport = true
