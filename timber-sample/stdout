@@ -1,0 +1,10 @@
+/Users/hannes/git/timber/timber-sample/src/main/AndroidManifest.xml:13: Warning: Redundant label can be removed [RedundantLabel]
+        android:label="@string/app_name"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RedundantLabel":
+   When an activity does not have a label attribute, it will use the one from
+   the application tag. Since the application has already specified the same
+   label, the label on this activity can be omitted.
+
+0 errors, 1 warnings
