@@ -3,11 +3,11 @@ buildscript {
       'minSdk': 14,
       'compileSdk': 30,
 
-      'kotlin': '1.6.20',
+      'kotlin': '1.6.21',
       'autoService': '1.0-rc7',
 
       // Update WrongTimberUsageDetectorTest#innerStringFormatWithStaticImport when >= 7.1.0-alpha07
-      'androidPlugin': '7.3.1',
+      'androidPlugin': '7.4.1',
       'androidTools': '30.0.0',
   ]
 
