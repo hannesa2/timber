@@ -4,6 +4,7 @@ import com.android.tools.lint.checks.infrastructure.TestFiles.java
 import com.android.tools.lint.checks.infrastructure.TestFiles.kotlin
 import com.android.tools.lint.checks.infrastructure.TestFiles.manifest
 import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
+import com.android.tools.lint.checks.infrastructure.TestMode
 import org.junit.Test
 import timber.lint.WrongTimberUsageDetector.Companion.issues
 
@@ -42,6 +43,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -92,6 +94,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -140,6 +143,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -188,6 +192,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -238,7 +243,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.WHITESPACE)
         .run()
         .expect("""
             |src/foo/Example.java:5: Warning: Using 'String#format' inside of 'Timber' [StringFormatInTimber]
@@ -282,10 +289,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
-        // Remove when AGP 7.1.0-alpha07 is out
-        // https://groups.google.com/g/lint-dev/c/BigCO8sMhKU
-        .allowCompilationErrors()
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.PARENTHESIZED, TestMode.WHITESPACE)
         .run()
         .expect("""
             |src/foo/Example.java:6: Warning: Using 'String#format' inside of 'Timber' [StringFormatInTimber]
@@ -329,6 +335,7 @@ class WrongTimberUsageDetectorTest {
                 |  private fun id(s: String): String { return s }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -355,6 +362,7 @@ class WrongTimberUsageDetectorTest {
                 |}""".trimMargin())
           // no kotlin equivalent, since nested assignments do not exist
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -386,6 +394,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expectClean()
@@ -409,6 +418,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expectClean()
@@ -430,6 +440,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expectClean()
@@ -457,6 +468,7 @@ class WrongTimberUsageDetectorTest {
               |  }
               |}""".trimMargin()),
       )
+      .allowClassNameClashes(true)
       .issues(*issues)
       .run()
       .expectClean()
@@ -484,7 +496,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.WHITESPACE)
         .run()
         .expect("""
             |src/foo/Example.java:6: Warning: Throwable should be first argument [ThrowableNotAtBeginning]
@@ -526,6 +540,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expectClean()
@@ -553,7 +568,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.PARENTHESIZED)
         .run()
         .expect("""
             |src/foo/Example.java:6: Warning: Replace String concatenation with Timber's string formatting [BinaryOperationInTimber]
@@ -590,7 +607,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.PARENTHESIZED)
         .run()
         .expect("""
             |src/foo/Example.java:6: Warning: Replace String concatenation with Timber's string formatting [BinaryOperationInTimber]
@@ -629,7 +648,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.PARENTHESIZED)
         .run()
         .expect("""
             |src/foo/Example.java:7: Warning: Replace String concatenation with Timber's string formatting [BinaryOperationInTimber]
@@ -666,7 +687,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.PARENTHESIZED)
         .run()
         .expect("""
             |src/foo/Example.java:6: Warning: Replace String concatenation with Timber's string formatting [BinaryOperationInTimber]
@@ -695,6 +718,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -727,6 +751,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -759,6 +784,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -767,7 +793,7 @@ class WrongTimberUsageDetectorTest {
             |                    ~~~~~~
             |src/foo/Example.kt:5: Error: Wrong argument type for formatting argument '#1' in %d: conversion is 'd', received String (argument #2 in method call) [TimberArgTypes]
             |     Timber.d("%d", "arg1")
-            |                     ~~~~
+            |                    ~~~~~~
             |2 errors, 0 warnings""".trimMargin())
   }
 
@@ -792,6 +818,7 @@ class WrongTimberUsageDetectorTest {
                 |}""".trimMargin()),
                 manifest().minSdk(25)
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -822,6 +849,7 @@ class WrongTimberUsageDetectorTest {
                 |}""".trimMargin()),
             manifest().minSdk(26)
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expectClean()
@@ -847,6 +875,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -879,6 +908,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -911,6 +941,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -919,7 +950,7 @@ class WrongTimberUsageDetectorTest {
             |                               ~~~~~~
             |src/foo/Example.kt:5: Error: Wrong argument type for formatting argument '#1' in %d: conversion is 'd', received String (argument #2 in method call) [TimberArgTypes]
             |     Timber.tag("tag").d("%d", "arg1")
-            |                                ~~~~
+            |                               ~~~~~~
             |2 errors, 0 warnings""".trimMargin())
   }
 
@@ -945,6 +976,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expect("""
@@ -989,7 +1021,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.REORDER_ARGUMENTS, TestMode.WHITESPACE)
         .run()
         .expect("""
             |src/foo/Example.java:6: Warning: Explicitly logging exception message is redundant [TimberExceptionLogging]
@@ -1035,7 +1069,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.REORDER_ARGUMENTS)
         .run()
         .expectClean()
   }
@@ -1060,7 +1096,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.REORDER_ARGUMENTS)
         .run()
         .expectClean()
   }
@@ -1091,7 +1129,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.REORDER_ARGUMENTS)
         .run()
         .expectClean()
   }
@@ -1120,7 +1160,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.REORDER_ARGUMENTS)
         .run()
         .expectClean()
   }
@@ -1149,7 +1191,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.REORDER_ARGUMENTS)
         .run()
         .expectClean()
   }
@@ -1176,7 +1220,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.REORDER_ARGUMENTS, TestMode.WHITESPACE)
         .run()
         .expect("""
             |src/foo/Example.java:6: Warning: Use single-argument log method instead of null/empty message [TimberExceptionLogging]
@@ -1220,7 +1266,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.REORDER_ARGUMENTS, TestMode.WHITESPACE)
         .run()
         .expect("""
             |src/foo/Example.java:6: Warning: Use single-argument log method instead of null/empty message [TimberExceptionLogging]
@@ -1264,7 +1312,9 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
+        .skipTestModes(TestMode.REORDER_ARGUMENTS)
         .run()
         .expectClean()
   }
@@ -1289,6 +1339,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expectClean()
@@ -1314,6 +1365,7 @@ class WrongTimberUsageDetectorTest {
                 |  }
                 |}""".trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expectClean()
@@ -1332,6 +1384,7 @@ class WrongTimberUsageDetectorTest {
                 |}""".trimMargin()),
             // no kotlin equivalent, since primitive wrappers do not exist
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expectClean()
@@ -1367,6 +1420,7 @@ class WrongTimberUsageDetectorTest {
                 |}
                 """.trimMargin())
         )
+        .allowClassNameClashes(true)
         .issues(*issues)
         .run()
         .expectClean()
