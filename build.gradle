@@ -32,7 +32,7 @@ buildscript {
       annotations: 'org.jetbrains:annotations:24.1.0',
 
       junit: 'junit:junit:4.13.2',
-      truth: 'com.google.truth:truth:1.4.2',
+      truth: 'com.google.truth:truth:1.4.5',
       robolectric: 'org.robolectric:robolectric:4.12.2',
   ]
 
